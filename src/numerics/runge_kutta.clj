@@ -63,10 +63,6 @@
 (def tn 0.0)
 (def yn 2.0)
 (def dt 2.0)
-(def k [])
-(def ai a)
-(def ci c)
-(def t (+ tn (* (first ci) dt)))
 ;(def ks (or (peek k) (repeat 0)))
 ;(def y (vec (map + yn (map (fn [k] (* dt (reduce + (map #(* % k) (first ai))))) ks))))
 
@@ -74,25 +70,6 @@
 ;;This approach is probably right (well, there's no recursion).
 ;; Currently ki is not being accumulated, though.
 ;; kj is going to count up to s. At each loop they must be summed. IDK if this happens above.
-;(prn
-;  (for [i (range (count c))]
-;    (f [(+ tn (* dt (get c i 0)))
-;        (+ yn (* dt (reduce + 0 (for [j (range (count c))] (* (get-in a [i j] 0) (get k j 0))))))])))
-
-(prn "XXXXXXXXXXXXXXXX")
-;(def k0 (ki f tn yn dt a c []))
-;(prn k0)
-;(def k1 (ki f tn yn dt (-> a rest) (-> c rest) [k0]))
-;(prn k1)
-;(def k2 (ki f tn yn dt (-> a rest rest) (-> c rest rest) [k0 k1]))
-;(prn k2)
-;(def k3 (ki f tn yn dt (-> a rest rest rest) (-> c rest rest rest) [k0 k1 k2]))
-;(prn k3)
-;(def k4 (ki f tn yn dt (-> a rest rest rest rest) (-> c rest rest rest rest) [k0 k1 k2 k3]))
-;(prn k4)
-;(def k5 (ki f tn yn dt (-> a rest rest rest rest rest) (-> c rest rest rest rest rest) [k0 k1 k2 k3 k4]))
-;(prn k5)
-
 (prn "YYYYYYYYY")
 (def kk (loop [ks [] ai a ci c]
   (if-not (first ci)
