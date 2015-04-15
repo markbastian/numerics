@@ -46,14 +46,9 @@
 ;      [(* dt (Math/pow (/ tol error-estimate) 0.25)) y])))
 
 ;;;; 1 D
-(defn ki [f [tn yn] dt a c k]
-  (let [ys (+ yn (* dt (reduce + 0 (for [j (range (count k))] (* (a j) (k j))))))]
-    (f (into [(+ tn (* dt c))] [ys]))))
+
 
 (defn f [[x y]] (- (* 4.0 (Math/exp (* 0.8 x))) (* 0.5 y)))
-(prn (ks [f] [0 2] 0.5 tableaus/classic-fourth-order))
-(prn (rk-step [f] [0 2] 0.5 tableaus/classic-fourth-order))
-
 ;;This is wrong and needs fixing.
 (prn (ks [f] [0 2] 2.0 tableaus/cash-karp))
 
@@ -67,10 +62,11 @@
 ;(def y (vec (map + yn (map (fn [k] (* dt (reduce + (map #(* % k) (first ai))))) ks))))
 
 ;; http://en.wikipedia.org/wiki/List_of_Runge–Kutta_methods
-;;This approach is probably right (well, there's no recursion).
-;; Currently ki is not being accumulated, though.
-;; kj is going to count up to s. At each loop they must be summed. IDK if this happens above.
 (prn "YYYYYYYYY")
+(defn ki [f [tn yn] dt a c k]
+  (let [ys (+ yn (* dt (reduce + 0 (map * a k))))]
+    (f (into [(+ tn (* dt c))] [ys]))))
+
 (def kk (loop [ks [] ai a ci c]
   (if-not (first ci)
     ks
