@@ -1,5 +1,6 @@
 (ns numerics.lorenz
   (:require [numerics.runge-kutta :as rk]
+            [numerics.tableaus :as tableaus]
             [clojure.pprint :as pprint]))
 
 (def sigma 10.0)
@@ -11,6 +12,6 @@
 (defn dy [[_ x y z]] (- (* rho x) y (* x z)))
 (defn dz [[_ x y z]] (- (* x y) (* beta z)))
 
-(def steps (take 100 (iterate #(rk/rk-step [dx dy dz] % 0.1 rk/rk4-tableau) ic)))
+(def steps (take 100 (iterate #(rk/rk-step [dx dy dz] % 0.1 tableaus/classic-fourth-order) ic)))
 
 (pprint/pprint steps)

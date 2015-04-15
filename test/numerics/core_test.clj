@@ -1,7 +1,6 @@
 (ns numerics.core-test
-  (:require [clojure.test :refer :all]
-            [numerics.core :refer :all]))
+  (:require [clojure.test :refer :all]))
 
 (deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+  (testing "I pass."
+    (is (= 1 1))))
