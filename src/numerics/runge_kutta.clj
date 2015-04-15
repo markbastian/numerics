@@ -49,27 +49,17 @@
 
 
 (defn f [[x y]] (- (* 4.0 (Math/exp (* 0.8 x))) (* 0.5 y)))
-;;This is wrong and needs fixing.
-(prn (ks [f] [0 2] 2.0 tableaus/cash-karp))
-
-(def c (tableaus/cash-karp :c))
-(def a (tableaus/cash-karp :a))
-
-(def tn 0.0)
-(def yn 2.0)
-(def dt 2.0)
-;(def ks (or (peek k) (repeat 0)))
-;(def y (vec (map + yn (map (fn [k] (* dt (reduce + (map #(* % k) (first ai))))) ks))))
 
 ;; http://en.wikipedia.org/wiki/List_of_Runge–Kutta_methods
 (prn "YYYYYYYYY")
-(defn ki [f [tn yn] dt a c K]
-  (let [ys (+ yn (* dt (reduce + (map * a K))))]
+(defn ki [f [tn yn] dt a c k]
+  (let [ys (+ yn (* dt (reduce + (map * a k))))]
     (f (into [(+ tn (* dt c))] [ys]))))
 
-(def kk (loop [ks [] ai a ci c]
-  (if-not (first ci)
-    ks
-    (recur (conj ks (ki f [tn yn] dt (first ai) (first ci) ks)) (rest ai) (rest ci)))))
+(defn ks1 [f [tn yn] dt { :keys [a c] }]
+  (loop [ks [] ai a ci c]
+    (if-not (first ci)
+      ks
+      (recur (conj ks (ki f [tn yn] dt (first ai) (first ci) ks)) (rest ai) (rest ci)))))
 
-(prn kk)
+(prn (ks1 f [0 2] 2 tableaus/cash-karp))
