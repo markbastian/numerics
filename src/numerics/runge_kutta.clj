@@ -46,9 +46,9 @@
 ;      [(* dt (Math/pow (/ tol error-estimate) 0.25)) y])))
 
 ;;;; 1 D
-(defn ki [f tn yn dt a c k]
-  (f [(+ tn (* dt c))
-      (+ yn (* dt (reduce + 0 (for [j (range (count k))] (* (a j) (get k j 0))))))]))
+(defn ki [f [tn yn] dt a c k]
+  (let [ys (+ yn (* dt (reduce + 0 (for [j (range (count k))] (* (a j) (k j))))))]
+    (f (into [(+ tn (* dt c))] [ys]))))
 
 (defn f [[x y]] (- (* 4.0 (Math/exp (* 0.8 x))) (* 0.5 y)))
 (prn (ks [f] [0 2] 0.5 tableaus/classic-fourth-order))
@@ -74,6 +74,6 @@
 (def kk (loop [ks [] ai a ci c]
   (if-not (first ci)
     ks
-    (recur (conj ks (ki f tn yn dt (first ai) (first ci) ks)) (rest ai) (rest ci)))))
+    (recur (conj ks (ki f [tn yn] dt (first ai) (first ci) ks)) (rest ai) (rest ci)))))
 
 (prn kk)
