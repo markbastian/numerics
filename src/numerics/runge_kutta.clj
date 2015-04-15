@@ -63,8 +63,8 @@
 
 ;; http://en.wikipedia.org/wiki/List_of_Runge–Kutta_methods
 (prn "YYYYYYYYY")
-(defn ki [f [tn yn] dt a c k]
-  (let [ys (+ yn (* dt (reduce + 0 (map * a k))))]
+(defn ki [f [tn yn] dt a c K]
+  (let [ys (+ yn (* dt (reduce + (map * a K))))]
     (f (into [(+ tn (* dt c))] [ys]))))
 
 (def kk (loop [ks [] ai a ci c]
