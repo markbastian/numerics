@@ -46,9 +46,9 @@
 ;      [(* dt (Math/pow (/ tol error-estimate) 0.25)) y])))
 
 ;;;; 1 D
-(defn ki [f tn yn dt { :keys [a c]} k i]
-  (f [(+ tn (* dt (get c i 0)))
-      (+ yn (* dt (reduce + 0 (for [j (range (count k))] (* (get-in a [i j] 0) (get k j 0))))))]))
+(defn ki [f tn yn dt a c k]
+  (f [(+ tn (* dt c))
+      (+ yn (* dt (reduce + 0 (for [j (range (count k))] (* (a j) (get k j 0))))))]))
 
 (defn f [[x y]] (- (* 4.0 (Math/exp (* 0.8 x))) (* 0.5 y)))
 (prn (ks [f] [0 2] 0.5 tableaus/classic-fourth-order))
@@ -79,21 +79,24 @@
 ;    (f [(+ tn (* dt (get c i 0)))
 ;        (+ yn (* dt (reduce + 0 (for [j (range (count c))] (* (get-in a [i j] 0) (get k j 0))))))])))
 
-;(loop [k []]
-;  (if true
-;  k
-;  (recur )))
+(prn "XXXXXXXXXXXXXXXX")
+;(def k0 (ki f tn yn dt a c []))
+;(prn k0)
+;(def k1 (ki f tn yn dt (-> a rest) (-> c rest) [k0]))
+;(prn k1)
+;(def k2 (ki f tn yn dt (-> a rest rest) (-> c rest rest) [k0 k1]))
+;(prn k2)
+;(def k3 (ki f tn yn dt (-> a rest rest rest) (-> c rest rest rest) [k0 k1 k2]))
+;(prn k3)
+;(def k4 (ki f tn yn dt (-> a rest rest rest rest) (-> c rest rest rest rest) [k0 k1 k2 k3]))
+;(prn k4)
+;(def k5 (ki f tn yn dt (-> a rest rest rest rest rest) (-> c rest rest rest rest rest) [k0 k1 k2 k3 k4]))
+;(prn k5)
 
-(def k0 (ki f tn yn dt tableaus/cash-karp [] 0))
-(prn k0)
-(def k1 (ki f tn yn dt tableaus/cash-karp [k0] 1))
-(prn k1)
-(def k2 (ki f tn yn dt tableaus/cash-karp [k0 k1] 2))
-(prn k2)
-(def k3 (ki f tn yn dt tableaus/cash-karp [k0 k1 k2] 3))
-(prn k3)
-(def k4 (ki f tn yn dt tableaus/cash-karp [k0 k1 k2 k3] 4))
-(prn k4)
-(def k5 (ki f tn yn dt tableaus/cash-karp [k0 k1 k2 k3 k4] 5))
-(prn k5)
+(prn "YYYYYYYYY")
+(def kk (loop [ks [] ai a ci c]
+  (if-not (first ci)
+    ks
+    (recur (conj ks (ki f tn yn dt (first ai) (first ci) ks)) (rest ai) (rest ci)))))
 
+(prn kk)
