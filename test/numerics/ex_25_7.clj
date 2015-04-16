@@ -28,12 +28,16 @@
           expected -0.01622]
       (is (<= (Math/abs (- err expected)) 1E-5)))))
 
-;(def c (rk/rk-step [f] [0 2] 2 tableaus/classic-fourth-order))
-;(def hstep (rk/rk-step [f] [0 2] 1 tableaus/classic-fourth-order))
-;(def cc (rk/rk-step [f] hstep 1 tableaus/classic-fourth-order))
-;(prn (/ (- (second cc) (second c)) 15))
+(deftest example-25-13
+  (testing "Example 25.13, page 713 of Chapra and Canale, 3rd Ed."
+    (let [expected [3 3.908511 4.359883 6.832587 12.09831 10.13237]
+          ic [0 2]
+          dt 2.0
+          fks (rk/ks [f] ic dt tableaus/cash-karp)
+          diffs (map - (first fks) expected)
+          err (Math/sqrt (reduce + (map * diffs diffs)))]
+      (is (<= err 1E-5)))))
 
-(prn (rk/ks [f] [0 2] 2.0 tableaus/cash-karp))
 
 
 
