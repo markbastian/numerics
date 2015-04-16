@@ -52,14 +52,26 @@
 
 ;; http://en.wikipedia.org/wiki/List_of_Runge–Kutta_methods
 (prn "YYYYYYYYY")
-(defn ki [f [tn yn] dt a c k]
-  (let [ys (+ yn (* dt (reduce + (map * a k))))]
-    (f (into [(+ tn (* dt c))] [ys]))))
+(defn ki [f [tn & yn] dt a c k]
+  (do
+    ;(prn "iter")
+    ;(prn "yn: " yn)
+    ;(prn (str "a: " a))
+    ;(prn (str "c: " c))
+    ;(prn (str "k: " k))
+    (let [t (+ tn (* dt c))
+          dy (map #(* dt (reduce + (map * a %))) k)
+          ys (map + yn dy)]
+      (f (into [t] ys)))))
 
-(defn ks1 [f [tn yn] dt { :keys [a c] }]
-  (loop [ks [] ai a ci c]
+(defn ks1 [f ic dt { :keys [a c] }]
+  (let [fsys (apply juxt f)]
+    (loop [ks (repeat (count f) []) ai a ci c]
     (if-not (first ci)
       ks
-      (recur (conj ks (ki f [tn yn] dt (first ai) (first ci) ks)) (rest ai) (rest ci)))))
+      (recur
+        (map conj ks (ki fsys ic dt (first ai) (first ci) ks))
+        (rest ai)
+        (rest ci))))))
 
-(prn (ks1 f [0 2] 2 tableaus/cash-karp))
+(prn (ks1 [f] [0 2] 2 tableaus/cash-karp))
