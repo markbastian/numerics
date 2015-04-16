@@ -1,5 +1,4 @@
-(ns numerics.runge-kutta
-  (:require [numerics.tableaus :as tableaus]))
+(ns numerics.runge-kutta)
 
 (defn ki [f [tn & yn] dt a c k]
   (let [dy (map #(* dt (reduce + (map * a %))) k)]
