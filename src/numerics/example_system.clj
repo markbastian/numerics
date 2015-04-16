@@ -12,5 +12,8 @@
 (prn (rk/rk-step [f g] ic 0.5 tableaus/classic-fourth-order))
 
 (def steps (take 10 (iterate #(rk/rk-step [f g] % 0.5 tableaus/classic-fourth-order) ic)))
+(pprint/pprint (last steps))
 
-(pprint/pprint steps)
+;This just uses the forward step and isn't adaptive
+(def steps2 (take 10 (iterate #(rk/rk-step [f g] % 0.5 tableaus/cash-karp) ic)))
+(pprint/pprint (last steps2))
