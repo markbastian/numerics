@@ -17,8 +17,6 @@
 
 (def steps (take 100 (iterate #(rk/rk-step [dr df] % dt tableaus/classic-fourth-order) ic)))
 
-(pprint/pprint steps)
-
 (def rabbits-series (XYSeries. "Rabbits"))
 (def foxes-series (XYSeries. "Foxes"))
 (def state-series (XYSeries. "State Space"))

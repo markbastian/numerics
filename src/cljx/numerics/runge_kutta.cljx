@@ -27,9 +27,10 @@
 
 (defn rk-adaptive-step [f ic dt tol tableau]
   (loop [[y err] (adaptive-step f ic dt tableau)]
-    (if (<= err tol)
-      [y (-> (/ tol err) Math/abs (Math/pow 0.2) (* dt))]
-      (recur (adaptive-step f ic (-> (/ tol err) Math/abs (Math/pow 0.25) (* dt)) tableau)))))
+    (let [e (Math/abs (/ tol err))]
+      (if (< err tol)
+      [y (-> e (Math/pow 0.2) (* dt 0.9))]
+      (recur (adaptive-step f ic (-> e (Math/pow 0.25) (* dt 0.9)) tableau))))))
 
 ;(defn f [[x y]] (- (* 4.0 (Math/exp (* 0.8 x))) (* 0.5 y)))
 
