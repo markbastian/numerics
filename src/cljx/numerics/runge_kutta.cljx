@@ -13,11 +13,13 @@
         (rest ai)
         (rest ci)))))
 
-(defn y-step [k [tn & yn] dt b]
+(defn y-step ""
+  [k [tn & yn] dt b]
   (let [deltas (map #(reduce + (map * b %)) k)]
     (into [(+ tn dt)] (map #(-> %1 (* dt) (+ %2)) deltas yn))))
 
-(defn rk-step [f ic dt { :keys [b] :as tableau}]
+(defn rk-step "Take a single step forward by dt"
+  [f ic dt { :keys [b] :as tableau}]
   (y-step (ks f ic dt tableau) ic dt b))
 
 (defn adaptive-step [f ic dt { :keys [b b*] :as tableau}]
