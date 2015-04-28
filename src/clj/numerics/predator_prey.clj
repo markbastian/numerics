@@ -38,7 +38,7 @@
   PlotOrientation/VERTICAL
   true true true))
 
-(def vs (VectorSeries. "Arrows"))
+(def vs (VectorSeries. "Derivative"))
 
 (def scale 0.2)
 
@@ -55,11 +55,11 @@
 
 (def vsc (doto (VectorSeriesCollection.) (.addSeries vs)))
 
-(def x-axis (NumberAxis. "R"))
-(def y-axis (NumberAxis. "F"))
+(def x-axis (NumberAxis. "Rabbits"))
+(def y-axis (NumberAxis. "Foxes"))
 (def renderer (VectorRenderer.))
 (def plot (XYPlot. vsc x-axis y-axis renderer))
-(def c (JFreeChart. "Arrows" plot))
+(def c (JFreeChart. "Direction Field" plot))
 
 (def cp (ChartPanel. c))
 

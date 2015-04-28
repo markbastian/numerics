@@ -31,19 +31,3 @@
       (if (< err tol)
       [y (-> e (Math/pow 0.2) (* dt 0.9))]
       (recur (adaptive-step f ic (-> e (Math/pow 0.25) (* dt 0.9)) tableau))))))
-
-;(defn f [[x y]] (- (* 4.0 (Math/exp (* 0.8 x))) (* 0.5 y)))
-
-
-;(def fks (ks [f] [0 2] 2 tableaus/cash-karp))
-;(prn fks)
-;(prn (rk-step [f] [0 2] 2 tableaus/cash-karp))
-;(prn (adaptive-step [f] [0 2] 2 tableaus/cash-karp))
-;
-;(def x (rk-step [f] [0 2] 2 tableaus/cash-karp))
-;(prn x)
-;(prn (rk-step [f] x 2 tableaus/cash-karp))
-;
-;(prn (rk-adaptive-step [f] [0 2] 2 0.00001 tableaus/cash-karp))
-
-;(def iter (iterate #(rk-step [f] % 2 tableaus/cash-karp) [0 2]))

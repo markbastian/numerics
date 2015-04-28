@@ -5,13 +5,13 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.jfree/jfreechart "1.0.19"]
-                 [org.clojure/clojurescript "0.0-3126"]]
+                 [org.clojure/clojurescript "0.0-3196"]]
 
   :jar-exclusions [#"\.cljx|\.swp|\.swo|\.DS_Store"]
   :profiles {:uberjar {:aot :all}
              :dev {:plugins [[com.keminglabs/cljx "0.6.0"]
                              [lein-cljsbuild "1.0.5"]
-                             [org.clojure/clojurescript "0.0-3126"]]}
+                             [org.clojure/clojurescript "0.0-3196"]]}
              :cljs {:plugins [[lein-cljsbuild "1.0.5"]] }}
 
   :prep-tasks [["cljx" "once"] "javac" "compile"]
