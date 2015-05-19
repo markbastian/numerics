@@ -1,31 +1,7 @@
 (ns numerics.canvasui
   (:require [numerics.tableaus :as tableaus]
-            [numerics.runge-kutta :as rk]))
-
-(defn draw-grid [ctx w h x-max y-max]
-  (let [steps 10]
-    (doseq [i (range steps)]
-    (do
-      (.beginPath ctx)
-      (.moveTo ctx 0 (* (/ h steps) i))
-      (.lineTo ctx w (* (/ h steps) i))
-      (.moveTo ctx (* (/ w steps) i) 0)
-      (.lineTo ctx (* (/ w steps) i) h)
-      (.stroke ctx)))))
-
-(defn draw-arrow [ctx x y dx dy]
-  (do
-    (.beginPath ctx)
-    (.moveTo ctx x y)
-    (.lineTo ctx (+ x dx) (+ y dy))
-    (.stroke ctx)))
-
-(defn draw-points [ctx steps w h x-max y-max]
-  (let [[_ fi ri] (first steps)]
-    (do
-      (.moveTo ctx (/ (* w fi) x-max) (- h (/ (* h ri) y-max)))
-      (doseq [[_ f r] (rest steps)]
-        (.lineTo ctx (/ (* w f) x-max) (- h (/ (* h r) y-max)))))))
+            [numerics.runge-kutta :as rk]
+            [numerics.canvas-common :as cc]))
 
 (defn draw [canvas steps x y]
   (let [ctx (.getContext canvas "2d")]
@@ -33,10 +9,10 @@
       (-> .-fillStyle (set! "#000000"))
       (.fillRect 0 0 (.-width canvas) (.-height canvas))
       (-> .-strokeStyle (set! "#333333"))
-      (draw-grid (.-width canvas) (.-height canvas) x y)
+      (cc/draw-grid (.-width canvas) (.-height canvas) x y)
       (-> .-strokeStyle (set! "#00FF00"))
       (.beginPath)
-      (draw-points steps (.-width canvas) (.-height canvas) x y)
+      (cc/draw-points steps (.-width canvas) (.-height canvas) x y)
       (.stroke))))
 
 (defn sim [initial-prey
@@ -53,11 +29,11 @@
 
 (defn parametric-value [slider range] (* range(/ (.-value slider) (.-max slider))))
 
-(set!
+(defn ^:export init[canvas]
+  (set!
   (.-onload js/window)
   (when (and js/document (.-getElementById js/document))
-    (let [canvas (.getElementById js/document "rkCanvas")
-          prey-population-slider (.getElementById js/document "prey-population-slider")
+    (let [prey-population-slider (.getElementById js/document "prey-population-slider")
           predator-population-slider (.getElementById js/document "predator-population-slider")
           reproduction-slider (.getElementById js/document "reproduction-rate-slider")
           predation-slider (.getElementById js/document "predation-rate-slider")
@@ -74,4 +50,4 @@
         (doseq [slider [prey-population-slider predator-population-slider
                         reproduction-slider predation-slider growth-slider death-slider]]
           (set! (.-oninput slider) draw-func))
-        (draw-func)))))
+        (draw-func))))))
