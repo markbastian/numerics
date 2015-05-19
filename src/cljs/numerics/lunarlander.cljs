@@ -58,23 +58,24 @@
         (.restore)
         (.restore)))))
 
-(defn dvx [_] (-> (@controls :theta) (* Math/PI) (/ -180) Math/sin (* (@controls :thrust))))
-(defn dvy [_] (+ -9.81 (-> (@controls :theta) (* Math/PI) (/ -180) Math/cos (* (@controls :thrust)))))
-
-(defn sim [state]
+(defn sim [state {:keys [theta thrust]}]
   (let [t (.getTime (js/Date.))
         dt (* (- t (@state :time)) 1E-3)
+        dvx #(-> theta (* Math/PI) (/ -180) Math/sin (* thrust))
+        dvy #(+ -9.81 (-> theta (* Math/PI) (/ -180) Math/cos (* thrust)))
         new-states (rk/rk-step [#(% 3) #(% 4) dvx dvy] (@state :state) dt tableaus/classic-fourth-order)]
     (reset! state { :state new-states :time t })))
 
 (defn ^:export init[canvas]
   (set!
     (.-onload js/window)
-    (let [state (atom { :state [0 0 200 0 0] :time (.getTime (js/Date.)) })]
+    (let [state (atom { :state [0 0 200 0 0] :time (.getTime (js/Date.)) })
+          ;controls (atom { :theta 0 :thrust 0 })
+          ]
       (do
       (draw canvas @state)
       (js/setInterval #(do
-                        (sim state)
+                        (sim state @controls)
                         (draw canvas @state)) 1)
       (set! (.-onkeydown js/document)
             (fn [e] (case (.-keyCode e)
