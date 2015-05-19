@@ -4,6 +4,14 @@
 
 (def controls (atom { :theta 0 :thrust 0 }))
 
+(defn fill-background [canvas]
+  (doto (.getContext canvas "2d")
+    (-> .-fillStyle (set! "000000"))
+    (.fillRect 0 0 (.-width canvas) (.-height canvas))))
+
+(defn intro-screen []
+  ())
+
 (defn draw-thrust [ctx { :keys [state]}]
   (when (pos? (@controls :thrust))
     (doto ctx
@@ -24,29 +32,37 @@
     (.moveTo -3 -5)
     (.lineTo 0 5)
     (.lineTo 3 -5)
-    (.lineTo -3 - 5)
+    (.lineTo -3 -5)
     (.stroke)
     (draw-thrust s)
     (.restore)))
 
 (defn draw [canvas { :keys [state] :as s}]
   (let [xmin -100 xmax 100 ymin 0 ymax 200 w (.-width canvas) h (.-height canvas)]
-    (doto (.getContext canvas "2d")
-      (-> .-fillStyle (set! "000000"))
-      (.fillRect 0 0 w h)
-      (-> .-fillStyle (set! "00FF00"))
-      (-> .-strokeStyle (set! "FFFFFF"))
-      (.save)
-      (.translate (* (/ (- (state 1) xmin) (- xmax xmin)) w) (* (- 1 (/ (- (state 2) ymin) (- ymax ymin))) h))
-      (draw-lander s)
-      (.fillText (str (state 1) ", " (state 2)) 0 0)
-      (.restore))))
+    (do
+      (fill-background canvas)
+      (doto (.getContext canvas "2d")
+        (-> .-fillStyle (set! "00FF00"))
+        (-> .-strokeStyle (set! "FFFFFF"))
+        (.save)
+        (.translate 0 h)
+        (.scale 1 -1)
+        (.scale (/ w (- xmax xmin)) (/ h (- ymax ymin)))
+        (.translate (- xmin) (- ymin))
+        (.translate (state 1) (state 2))
+        (draw-lander s)
+        (.save)
+        (.scale 1 -1)
+        (.fillText (str (@controls :theta)) 0 0)
+        ;(.fillText (str (state 1) ", " (state 2) ", " (@controls :theta)) 0 0)
+        (.restore)
+        (.restore)))))
 
 
 (defn dx [[t x y vx vy]] vx)
 (defn dy [[t x y vx vy]] vy)
-(defn dvx [[t x y vx vy]] (-> (@controls :theta) (* Math/PI) (/ 180) Math/sin (* (@controls :thrust))))
-(defn dvy [[t x y vx vy]] (+ -9.81 (-> (@controls :theta) (* Math/PI) (/ 180) Math/cos (* (@controls :thrust)))))
+(defn dvx [[t x y vx vy]] (-> (@controls :theta) (* Math/PI) (/ -180) Math/sin (* (@controls :thrust))))
+(defn dvy [[t x y vx vy]] (+ -9.81 (-> (@controls :theta) (* Math/PI) (/ -180) Math/cos (* (@controls :thrust)))))
 
 (defn sim [state]
   (let [t (.getTime (js/Date.))
@@ -65,8 +81,8 @@
                         (draw canvas @state)) 1)
       (set! (.-onkeydown js/document)
             (fn [e] (case (.-keyCode e)
-                      (37 97) (swap! controls update :theta - 10)
-                      (39 100) (swap! controls update :theta + 10)
+                      (37 97) (swap! controls update :theta (fn [theta] (mod (+ theta 10) 360)))
+                      (39 100) (swap! controls update :theta (fn [theta] (mod (- theta 10) 360)))
                       32 (swap! controls assoc :thrust 100)
                       :else nil)))
       (set! (.-onkeyup js/document)
