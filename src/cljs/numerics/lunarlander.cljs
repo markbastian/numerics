@@ -2,17 +2,15 @@
   (:require [numerics.tableaus :as tableaus]
             [numerics.runge-kutta :as rk]))
 
-(def controls (atom { :theta 0 :thrust 0 }))
-
 (defn fill-background [canvas color]
   (doto (.getContext canvas "2d")
     (-> .-fillStyle (set! color))
     (.fillRect 0 0 (.-width canvas) (.-height canvas))))
 
-(defn intro-screen [canvas]
+(defn intro-screen [canvas controls]
   (fill-background canvas "000000"))
 
-(defn draw-thrust [ctx { :keys [state]}]
+(defn draw-thrust [ctx { :keys [state]} controls]
   (when (pos? (@controls :thrust))
     (doto ctx
       (-> .-strokeStyle (set! "FF0000"))
@@ -23,7 +21,7 @@
       (.lineTo -3 5)
       (.stroke))))
 
-(defn draw-lander [ctx { :keys [state] :as s}]
+(defn draw-lander [ctx { :keys [state] :as s} controls]
   (doto ctx
     (.save)
     (.rotate (-> (@controls :theta) (* Math/PI) (/ 180)))
@@ -34,10 +32,10 @@
     (.lineTo 3 -5)
     (.lineTo -3 -5)
     (.stroke)
-    (draw-thrust s)
+    (draw-thrust s controls)
     (.restore)))
 
-(defn draw [canvas { :keys [state] :as s}]
+(defn draw [canvas { :keys [state] :as s} controls]
   (let [xmin -100 xmax 100 ymin 0 ymax 200 w (.-width canvas) h (.-height canvas)]
     (do
       (fill-background canvas "000000")
@@ -50,7 +48,7 @@
         (.scale (/ w (- xmax xmin)) (/ h (- ymax ymin)))
         (.translate (- xmin) (- ymin))
         (.translate (state 1) (state 2))
-        (draw-lander s)
+        (draw-lander s controls)
         (.save)
         (.scale 1 -1)
         (.fillText (str (@controls :theta)) 0 0)
@@ -70,13 +68,12 @@
   (set!
     (.-onload js/window)
     (let [state (atom { :state [0 0 200 0 0] :time (.getTime (js/Date.)) })
-          ;controls (atom { :theta 0 :thrust 0 })
-          ]
+          controls (atom { :theta 0 :thrust 0 })]
       (do
-      (draw canvas @state)
+      (draw canvas @state controls)
       (js/setInterval #(do
                         (sim state @controls)
-                        (draw canvas @state)) 1)
+                        (draw canvas @state controls)) 1)
       (set! (.-onkeydown js/document)
             (fn [e] (case (.-keyCode e)
                       (37 97) (swap! controls update :theta (fn [theta] (mod (+ theta 10) 360)))

@@ -36,4 +36,4 @@
   (let[x2 (+ x1 (/ (* fx1 (- x1 x0)) (- fx1 fx0)))]
     [f [x1 fx1] [x2 (f x2)]])))
 
-;(prn (secant-step (secant-step #(+ 0.1 (Math/sin %)) -1 1)))
+(prn (secant-step (secant-step #(+ 0.1 (Math/sin %)) -1 1)))
