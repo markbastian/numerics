@@ -1253,7 +1253,7 @@ h.call = function() {
     a = this;
     return a.d.l ? a.d.l() : a.d.call(null);
   }
-  var y = null, y = function(y, fa, ja, ma, qa, wa, ya, Ca, Fa, Ja, Pa, Wa, bb, lb, wb, Nb, Zb, vc, bd, zd, ue, rf) {
+  var y = null, y = function(y, fa, ja, ma, qa, wa, ya, Ca, Fa, Ja, Pa, Wa, bb, lb, wb, Nb, Zb, vc, bd, zd, ue, sf) {
     switch(arguments.length) {
       case 1:
         return Q.call(this, y);
@@ -1298,7 +1298,7 @@ h.call = function() {
       case 21:
         return b.call(this, y, fa, ja, ma, qa, wa, ya, Ca, Fa, Ja, Pa, Wa, bb, lb, wb, Nb, Zb, vc, bd, zd, ue);
       case 22:
-        return a.call(this, y, fa, ja, ma, qa, wa, ya, Ca, Fa, Ja, Pa, Wa, bb, lb, wb, Nb, Zb, vc, bd, zd, ue, rf);
+        return a.call(this, y, fa, ja, ma, qa, wa, ya, Ca, Fa, Ja, Pa, Wa, bb, lb, wb, Nb, Zb, vc, bd, zd, ue, sf);
     }
     throw Error("Invalid arity: " + arguments.length);
   };
@@ -5337,7 +5337,7 @@ Qc.prototype.t = function(a, b, c) {
 };
 var sa = new V(null, "meta", "meta", 1499536964), ta = new V(null, "dup", "dup", 556298533), jf = new V(null, "else", "else", -1508377146), ud = new V(null, "validator", "validator", -1966190681), kf = new V(null, "time", "time", 1385887882), lf = new V(null, "state", "state", -1988618099), ff = new V(null, "fallback-impl", "fallback-impl", -1501286995), pa = new V(null, "flush-on-newline", "flush-on-newline", -151457939), mf = new V(null, "theta", "theta", -427510258), ra = new V(null, "readably", 
 "readably", 1129599760), Ze = new V(null, "more-marker", "more-marker", -14717935), nf = new V(null, "c", "c", -1763192079), ua = new V(null, "print-length", "print-length", 1931866356), of = new V(null, "b", "b", 1482224470), pf = new V(null, "thrust", "thrust", 651754168), ef = new V(null, "alt-impl", "alt-impl", 670969595), qf = new V(null, "a", "a", -2123407586);
-var sf = new X(null, 4, 5, Y, [new X(null, 4, 5, Y, [1, 2.4, 3.2, 4], null), new X(null, 4, 5, Y, [.5, 1.2, 5.4, .3], null), new X(null, 4, 5, Y, [.4, 2, .4, 5.4], null), new X(null, 4, 5, Y, [.4, 3.2, 1.2, 5.6], null)], null), tf = new X(null, 4, 5, Y, [new X(null, 2, 5, Y, [1.1, 2.1], null), new X(null, 2, 5, Y, [9.4, 4.3], null), new X(null, 2, 5, Y, [1.2, 5.6], null), new X(null, 2, 5, Y, [6.4, 1.4], null)], null);
+var rf = new X(null, 4, 5, Y, [new X(null, 4, 5, Y, [1, 2.4, 3.2, 4], null), new X(null, 4, 5, Y, [.5, 1.2, 5.4, .3], null), new X(null, 4, 5, Y, [.4, 2, .4, 5.4], null), new X(null, 4, 5, Y, [.4, 3.2, 1.2, 5.6], null)], null), tf = new X(null, 4, 5, Y, [new X(null, 2, 5, Y, [1.1, 2.1], null), new X(null, 2, 5, Y, [9.4, 4.3], null), new X(null, 2, 5, Y, [1.2, 5.6], null), new X(null, 2, 5, Y, [6.4, 1.4], null)], null);
 function uf(a, b) {
   Vd(function() {
     return function d(e) {
@@ -5484,7 +5484,7 @@ function vf(a) {
                                         if (c < f) {
                                           var k = C.a(e, c);
                                           dd(g, function() {
-                                            var a = Dd(sf, new X(null, 2, 5, Y, [d, k], null));
+                                            var a = Dd(rf, new X(null, 2, 5, Y, [d, k], null));
                                             return v(a) ? a : 0;
                                           }() + function() {
                                             var c = Dd(a, new X(null, 2, 5, Y, [d, k], null));
@@ -5499,7 +5499,7 @@ function vf(a) {
                                   }
                                   var k = M(c);
                                   return S(function() {
-                                    var a = Dd(sf, new X(null, 2, 5, Y, [d, k], null));
+                                    var a = Dd(rf, new X(null, 2, 5, Y, [d, k], null));
                                     return v(a) ? a : 0;
                                   }() + function() {
                                     var c = Dd(a, new X(null, 2, 5, Y, [d, k], null));
@@ -5513,7 +5513,7 @@ function vf(a) {
                         };
                       }(c, d, g, k, l, f, e)(We(T(function() {
                         var a = d;
-                        return sf.b ? sf.b(a) : sf.call(null, a);
+                        return rf.b ? rf.b(a) : rf.call(null, a);
                       }())));
                     }()));
                     c += 1;
@@ -5539,7 +5539,7 @@ function vf(a) {
                                 if (d < g) {
                                   var f = C.a(e, d);
                                   dd(k, function() {
-                                    var a = Dd(sf, new X(null, 2, 5, Y, [c, f], null));
+                                    var a = Dd(rf, new X(null, 2, 5, Y, [c, f], null));
                                     return v(a) ? a : 0;
                                   }() + function() {
                                     var d = Dd(a, new X(null, 2, 5, Y, [c, f], null));
@@ -5554,7 +5554,7 @@ function vf(a) {
                           }
                           var l = M(d);
                           return S(function() {
-                            var a = Dd(sf, new X(null, 2, 5, Y, [c, l], null));
+                            var a = Dd(rf, new X(null, 2, 5, Y, [c, l], null));
                             return v(a) ? a : 0;
                           }() + function() {
                             var d = Dd(a, new X(null, 2, 5, Y, [c, l], null));
@@ -5568,18 +5568,18 @@ function vf(a) {
                 };
               }(m, f, e)(We(T(function() {
                 var a = m;
-                return sf.b ? sf.b(a) : sf.call(null, a);
+                return rf.b ? rf.b(a) : rf.call(null, a);
               }())));
             }()), c(N(f)));
           }
           return null;
         }
       }, null, null);
-    }(We(T(sf)));
+    }(We(T(rf)));
   }());
 }
-uf(sf, tf);
-vf(sf);
+uf(rf, tf);
+vf(rf);
 vf(tf);
 uf(new X(null, 1, 5, Y, [new X(null, 4, 5, Y, [0, 0, 0, 0], null)], null), new X(null, 4, 5, Y, [new X(null, 1, 5, Y, [0], null), new X(null, 1, 5, Y, [0], null), new X(null, 1, 5, Y, [0], null), new X(null, 1, 5, Y, [0], null)], null));
 function wf(a, b, c, d, e, f) {
@@ -5705,7 +5705,15 @@ ba("numerics.canvasui.init", function(a) {
     return k();
   }() : null;
 });
-function Bf(a, b, c) {
+function Bf(a) {
+  a.beginPath();
+  a.moveTo(-3, -5);
+  a.lineTo(0, 5);
+  a.lineTo(3, -5);
+  a.lineTo(-3, -5);
+  a.stroke();
+}
+function Cf(a, b, c) {
   b = Ac(b) ? jd(td, b) : b;
   var d = lc(b, lf), e = a.width, f = a.height, g = a.getContext("2d");
   g.fillStyle = "000000";
@@ -5724,15 +5732,10 @@ function Bf(a, b, c) {
   a.save();
   a.rotate((Wb.b ? Wb.b(c) : Wb.call(null, c)).call(null, mf) * Math.PI / 180);
   a.strokeStyle = "FFFFFF";
-  a.beginPath();
-  a.moveTo(-3, -5);
-  a.lineTo(0, 5);
-  a.lineTo(3, -5);
-  a.lineTo(-3, -5);
-  a.stroke();
+  Bf(a);
   b = Ac(b) ? jd(td, b) : b;
   lc(b, lf);
-  0 < (Wb.b ? Wb.b(c) : Wb.call(null, c)).call(null, pf) && (a.strokeStyle = "FF0000", a.beginPath(), a.moveTo(-3, 5), a.lineTo(0, -5), a.lineTo(3, 5), a.lineTo(-3, 5), a.stroke());
+  0 < (Wb.b ? Wb.b(c) : Wb.call(null, c)).call(null, pf) && (a.save(), a.translate(0, -5), a.strokeStyle = "FF0000", Bf(a), a.restore());
   a.restore();
   a.save();
   a.scale(1, -1);
@@ -5741,7 +5744,7 @@ function Bf(a, b, c) {
   a.restore();
   return a;
 }
-function Cf(a, b) {
+function Df(a, b) {
   var c = Ac(b) ? jd(td, b) : b, d = lc(c, pf), e = lc(c, mf), f = (new Date).getTime(), g = .001 * (f - (Wb.b ? Wb.b(a) : Wb.call(null, a)).call(null, kf)), k = function(a, b, c, d, e, f) {
     return function() {
       var a = f * Math.PI / -180;
@@ -5772,11 +5775,11 @@ ba("numerics.lunarlander.init", function(a) {
       var a = new oa(null, 2, [mf, 0, pf, 0], null);
       return sd ? sd(a) : rd.call(null, a);
     }();
-    Bf(a, Wb.b ? Wb.b(b) : Wb.call(null, b), c);
+    Cf(a, Wb.b ? Wb.b(b) : Wb.call(null, b), c);
     setInterval(function(b, c) {
       return function() {
-        Cf(b, Wb.b ? Wb.b(c) : Wb.call(null, c));
-        return Bf(a, Wb.b ? Wb.b(b) : Wb.call(null, b), c);
+        Df(b, Wb.b ? Wb.b(c) : Wb.call(null, c));
+        return Cf(a, Wb.b ? Wb.b(b) : Wb.call(null, b), c);
       };
     }(b, c), 1);
     document.onkeydown = function(a, b) {
@@ -5819,18 +5822,18 @@ ba("numerics.lunarlander.init", function(a) {
     }(b, c);
   }();
 });
-function Df(a, b) {
+function Ef(a, b) {
   return jd(Mc, W.e(function(a, b) {
     var e = a - b;
     return Math.abs.b ? Math.abs.b(e) : Math.abs.call(null, e);
   }, a, b));
 }
-function Ef(a, b, c) {
+function Ff(a, b, c) {
   return Vd(W.e(function(a, b) {
     return a + c * (b - a);
   }, a, b));
 }
-function Ff(a) {
+function Gf(a) {
   var b = Vd(W.a(function(a) {
     return Math.round.b ? Math.round.b(a) : Math.round.call(null, a);
   }, a));
@@ -5844,20 +5847,20 @@ function Ff(a) {
   var c = -(Gc(Ic, b) - (b.b ? b.b(a) : b.call(null, a)));
   return nc.e(b, a, c);
 }
-function Gf(a) {
-  for (var b = new X(null, 3, 5, Y, [0, 5, -5], null), c = Df(b, a), d = 1, e = new X(null, 1, 5, Y, [b], null);;) {
+function Hf(a) {
+  for (var b = new X(null, 3, 5, Y, [0, 5, -5], null), c = Ef(b, a), d = 1, e = new X(null, 1, 5, Y, [b], null);;) {
     if (c < d) {
       return e;
     }
-    var f = d + 1, e = ic.a(e, Ff(Ef(b, a, d / c))), d = f;
+    var f = d + 1, e = ic.a(e, Gf(Ff(b, a, d / c))), d = f;
   }
 }
-var Hf, If = new X(null, 2, 5, Y, [0, 0], null), Jf = U(If, 0), Kf = U(If, 1), Lf = Xe.h(Vb, Vb, Hc, gc([Lc, Lc, Hc], 0)).call(null, Jf), Mf = Xe.h(Lc, Hc, Vb, gc([Vb, Hc, Lc], 0)).call(null, Kf), Nf = W.a(Jc, W.e(Ic, Lf, Mf));
-Hf = W.p(pd, Lf, Mf, Nf);
-hf(gc([Hf], 0));
-hf(gc([Df(new X(null, 3, 5, Y, [0, 9, -9], null), new X(null, 3, 5, Y, [3, 4, -7], null))], 0));
-hf(gc([Gf(new X(null, 3, 5, Y, [-5, 2, 3], null))], 0));
-hf(gc([Df(new X(null, 3, 5, Y, [0, 5, -5], null), new X(null, 3, 5, Y, [0, 5, -5], null))], 0));
-hf(gc([Gf(new X(null, 3, 5, Y, [0, 5, -5], null))], 0));
+var If, Jf = new X(null, 2, 5, Y, [0, 0], null), Kf = U(Jf, 0), Lf = U(Jf, 1), Mf = Xe.h(Vb, Vb, Hc, gc([Lc, Lc, Hc], 0)).call(null, Kf), Nf = Xe.h(Lc, Hc, Vb, gc([Vb, Hc, Lc], 0)).call(null, Lf), Of = W.a(Jc, W.e(Ic, Mf, Nf));
+If = W.p(pd, Mf, Nf, Of);
+hf(gc([If], 0));
+hf(gc([Ef(new X(null, 3, 5, Y, [0, 9, -9], null), new X(null, 3, 5, Y, [3, 4, -7], null))], 0));
+hf(gc([Hf(new X(null, 3, 5, Y, [-5, 2, 3], null))], 0));
+hf(gc([Ef(new X(null, 3, 5, Y, [0, 5, -5], null), new X(null, 3, 5, Y, [0, 5, -5], null))], 0));
+hf(gc([Hf(new X(null, 3, 5, Y, [0, 5, -5], null))], 0));
 
 })();

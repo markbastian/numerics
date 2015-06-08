@@ -7,31 +7,43 @@
     (-> .-fillStyle (set! color))
     (.fillRect 0 0 (.-width canvas) (.-height canvas))))
 
-(defn intro-screen [canvas controls]
-  (fill-background canvas "000000"))
+(defn intro-screen [canvas]
+  (do
+    (fill-background canvas "000000")
+    (doto (.getContext canvas "2d")
+      (-> .-fillStyle (set! "00FF00"))
+      (-> .-strokeStyle (set! "FFFFFF"))
+      (.fillText "Welcome to Lunar Lander!" 0 40)
+      (.fillText "Press any key to play!" 0 50)
+      (.fillText "Press left and right to rotate" 0 60)
+      (.fillText "Press space to engage rocket" 0 70)
+      (.fillText "Win by making a gentle landing" 0 80)
+      (.fillText "Leaving the screen to the left, right, or top will cause you to lose." 0 90))))
+
+(defn draw-triangle [ctx]
+  (doto ctx
+    (.beginPath)
+    (.moveTo -3 -5)
+    (.lineTo 0 5)
+    (.lineTo 3 -5)
+    (.lineTo -3 -5)
+    (.stroke)))
 
 (defn draw-thrust [ctx { :keys [state]} controls]
   (when (pos? (@controls :thrust))
     (doto ctx
+      (.save)
+      (.translate 0 -5)
       (-> .-strokeStyle (set! "FF0000"))
-      (.beginPath)
-      (.moveTo -3 5)
-      (.lineTo 0 -5)
-      (.lineTo 3 5)
-      (.lineTo -3 5)
-      (.stroke))))
+      draw-triangle
+      (.restore))))
 
 (defn draw-lander [ctx { :keys [state] :as s} controls]
   (doto ctx
     (.save)
     (.rotate (-> (@controls :theta) (* Math/PI) (/ 180)))
     (-> .-strokeStyle (set! "FFFFFF"))
-    (.beginPath)
-    (.moveTo -3 -5)
-    (.lineTo 0 5)
-    (.lineTo 3 -5)
-    (.lineTo -3 -5)
-    (.stroke)
+    draw-triangle
     (draw-thrust s controls)
     (.restore)))
 
@@ -52,7 +64,6 @@
         (.save)
         (.scale 1 -1)
         (.fillText (str (@controls :theta)) 0 0)
-        ;(.fillText (str (state 1) ", " (state 2) ", " (@controls :theta)) 0 0)
         (.restore)
         (.restore)))))
 
@@ -70,17 +81,18 @@
     (let [state (atom { :state [0 0 200 0 0] :time (.getTime (js/Date.)) })
           controls (atom { :theta 0 :thrust 0 })]
       (do
-      (draw canvas @state controls)
-      (js/setInterval #(do
-                        (sim state @controls)
-                        (draw canvas @state controls)) 1)
-      (set! (.-onkeydown js/document)
-            (fn [e] (case (.-keyCode e)
-                      (37 97) (swap! controls update :theta (fn [theta] (mod (+ theta 10) 360)))
-                      (39 100) (swap! controls update :theta (fn [theta] (mod (- theta 10) 360)))
-                      32 (swap! controls assoc :thrust 100)
-                      :else nil)))
-      (set! (.-onkeyup js/document)
-            (fn [e] (case (.-keyCode e)
-                      32 (swap! controls assoc :thrust 0)
-                      :else nil)))))))
+        ;(intro-screen canvas)
+        (draw canvas @state controls)
+        (js/setInterval #(do
+                          (sim state @controls)
+                          (draw canvas @state controls)) 1)
+        (set! (.-onkeydown js/document)
+              (fn [e] (case (.-keyCode e)
+                        (37 97) (swap! controls update :theta (fn [theta] (mod (+ theta 10) 360)))
+                        (39 100) (swap! controls update :theta (fn [theta] (mod (- theta 10) 360)))
+                        32 (swap! controls assoc :thrust 100)
+                        :else nil)))
+        (set! (.-onkeyup js/document)
+              (fn [e] (case (.-keyCode e)
+                        32 (swap! controls assoc :thrust 0)
+                        :else nil)))))))
