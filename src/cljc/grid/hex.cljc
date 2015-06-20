@@ -37,8 +37,8 @@
         coords
         (recur (inc i) (conj coords (cube-round (cube-lerp f t (double (/ i n))))))))))
 
-(prn (hex-neighbors [0 0]))
-(prn (cube-dist [0 9 -9] [3 4 -7]))
-(prn (line-to [0 5 -5] [-5 2 3]))
-(prn (cube-dist [0 5 -5] [0 5 -5]))
-(prn (line-to [0 5 -5] [0 5 -5]))
+;(prn (hex-neighbors [0 0]))
+;(prn (cube-dist [0 9 -9] [3 4 -7]))
+;(prn (line-to [0 5 -5] [-5 2 3]))
+;(prn (cube-dist [0 5 -5] [0 5 -5]))
+;(prn (line-to [0 5 -5] [0 5 -5]))

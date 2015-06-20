@@ -1,36 +1,24 @@
-(defproject numerics "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+(defproject
+  numerics "0.1.0-SNAPSHOT"
+  :description "A numerical analysis library in Clojure"
+  :url "https://github.com/markbastian/numerics"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.6.0"]
+  :dependencies [[org.clojure/clojure "1.7.0-RC2"]
                  [org.jfree/jfreechart "1.0.19"]
-                 [org.clojure/clojurescript "0.0-3196"]]
+                 [org.clojure/clojurescript "0.0-3308"]]
 
-  :jar-exclusions [#"\.cljx|\.swp|\.swo|\.DS_Store"]
+  :jar-exclusions [#"\.swp|\.swo|\.DS_Store"]
   :profiles {:uberjar {:aot :all}
-             :dev {:plugins [[com.keminglabs/cljx "0.6.0"]
-                             [lein-cljsbuild "1.0.5"]
-                             [org.clojure/clojurescript "0.0-3196"]]}
-             :cljs {:plugins [[lein-cljsbuild "1.0.5"]] }}
+             :dev {:plugins [[lein-cljsbuild "1.0.6"]
+                             [org.clojure/clojurescript "0.0-3308"]]}
+             :cljs {:plugins [[lein-cljsbuild "1.0.6"]] }}
 
-  :prep-tasks [["cljx" "once"] "javac" "compile"]
+  :source-paths ["src/clj" "src/cljc"]
 
-  :source-paths ["src/clj"]
+  :clj {:builds [{ :source-paths ["src/clj" "src/cljc" "test"] }]}
 
-  :aliases {"cleantest" ["do" "clean," "cljx" "once," "test," "cljsbuild" "test"]}
-
-  :clj {:builds [{ :source-paths ["src/clj" "target/classes" "target/test-classes"] }]}
-
-  :cljsbuild {:builds [{ :source-paths ["src/cljs" "target/classes"]
+  :cljsbuild {:builds [{ :source-paths ["src/cljs" "src/cljc"]
                         :compiler { :output-to "resources/public/js/rk.js"
                                    :optimizations :advanced
-                                   :pretty-print true}}]}
-
-  :cljx {:builds [{:source-paths ["src/cljx"]
-                   :output-path "target/classes"
-                   :rules :clj}
-
-                  {:source-paths ["src/cljx"]
-                   :output-path "target/classes"
-                   :rules :cljs}]})
+                                   :pretty-print true}}]})

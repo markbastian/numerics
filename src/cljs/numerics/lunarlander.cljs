@@ -76,22 +76,32 @@
         new-states (rk/rk-step [#(% 3) #(% 4) dvx dvy] state dt tableaus/classic-fourth-order)]
     (swap! state-ref into { :state new-states :time t })))
 
+(defmulti keyaction (fn [state e] (@state :game-state)))
+
+(defmethod keyaction :live [state e]
+  (case (.-keyCode e)
+    (37 97) (swap! state update :theta (fn [theta] (mod (+ theta 10) 360)))
+    (39 100) (swap! state update :theta (fn [theta] (mod (- theta 10) 360)))
+    32 (swap! state assoc :thrust 100)
+    :else nil))
+
+(defmulti drawaction (fn [state _] (@state :game-state)))
+
+(defmethod drawaction :before [_ canvas] (intro-screen canvas))
+
+(defmethod drawaction :live [state canvas] (draw canvas @state))
+
 (defn ^:export init[canvas]
   (set!
     (.-onload js/window)
-    (let [state (atom { :state [0 0 200 0 0] :time (.getTime (js/Date.)) :theta 0 :thrust 0 })]
+    (let [state (atom { :game-state :live :state [0 0 200 0 0] :time (.getTime (js/Date.)) :theta 0 :thrust 0 })]
       (do
         ;(intro-screen canvas)
         (draw canvas @state)
         (js/setInterval #(do
                           (sim state)
                           (draw canvas @state)) 1)
-        (set! (.-onkeydown js/document)
-              (fn [e] (case (.-keyCode e)
-                        (37 97) (swap! state update :theta (fn [theta] (mod (+ theta 10) 360)))
-                        (39 100) (swap! state update :theta (fn [theta] (mod (- theta 10) 360)))
-                        32 (swap! state assoc :thrust 100)
-                        :else nil)))
+        (set! (.-onkeydown js/document) (fn [e] (keyaction state e)))
         (set! (.-onkeyup js/document)
               (fn [e] (case (.-keyCode e)
                         32 (swap! state assoc :thrust 0)
