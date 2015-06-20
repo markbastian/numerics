@@ -19,10 +19,10 @@
     (+ (or (get-in A [i j]) 0.0) (or (get-in B [i j]) 0.0)))))))
 
 
-(mmul M N)
-
-(madd M M)
-
-(madd M N)
-
-(mmul [[0 0 0 0]] [[0] [0] [0] [0]])
+;(mmul M N)
+;
+;(madd M M)
+;
+;(madd M N)
+;
+;(mmul [[0 0 0 0]] [[0] [0] [0] [0]])
