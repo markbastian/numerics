@@ -1,5 +1,6 @@
 (ns numerics.lunarlander
   (:require [numerics.tableaus :as tableaus]
+            [numerics.input :as in]
             [numerics.runge-kutta :as rk]))
 
 (defn fill-background [canvas color]
@@ -67,6 +68,8 @@
         (.restore)
         (.restore)))))
 
+(defn initial-state [] { :game-state :before :state [0 0 190 0 0] :time (.getTime (js/Date.)) :theta 0 :thrust 0 })
+
 (defn sim [state-ref]
   (let [{:keys [theta thrust time state]} @state-ref
         t (.getTime (js/Date.))
@@ -76,14 +79,14 @@
         new-states (rk/rk-step [#(% 3) #(% 4) dvx dvy] state dt tableaus/classic-fourth-order)]
     (swap! state-ref into { :state new-states :time t })))
 
-(defmulti keyaction (fn [state e] (@state :game-state)))
+(defmulti check-game-cond (fn [state] (@state :game-state)))
 
-(defmethod keyaction :live [state e]
-  (case (.-keyCode e)
-    (37 97) (swap! state update :theta (fn [theta] (mod (+ theta 10) 360)))
-    (39 100) (swap! state update :theta (fn [theta] (mod (- theta 10) 360)))
-    32 (swap! state assoc :thrust 100)
-    :else nil))
+(defmethod check-game-cond :live [state-ref]
+  (let [{[_ x y] :state } @state-ref]
+    (when-not (and (< -100 x 100) (< 0 y 200))
+      (reset! state-ref (initial-state)))))
+
+(defmethod check-game-cond :default [] ())
 
 (defmulti drawaction (fn [state _] (@state :game-state)))
 
@@ -94,14 +97,15 @@
 (defn ^:export init[canvas]
   (set!
     (.-onload js/window)
-    (let [state (atom { :game-state :live :state [0 0 200 0 0] :time (.getTime (js/Date.)) :theta 0 :thrust 0 })]
+    (let [state (atom (initial-state))]
       (do
-        ;(intro-screen canvas)
-        (draw canvas @state)
+        (drawaction state canvas)
         (js/setInterval #(do
-                          (sim state)
-                          (draw canvas @state)) 1)
-        (set! (.-onkeydown js/document) (fn [e] (keyaction state e)))
+                          (check-game-cond state)
+                          (when (= :live (@state :game-state)) (sim state))
+                          (drawaction state canvas)
+                          ) 1)
+        (set! (.-onkeydown js/document) (fn [e] (in/handle-input state e)))
         (set! (.-onkeyup js/document)
               (fn [e] (case (.-keyCode e)
                         32 (swap! state assoc :thrust 0)
