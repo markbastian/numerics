@@ -5719,8 +5719,191 @@ function If(a, b, c) {
   }
   return Hf(e, b, c, d);
 }
-;var Jf = new pa(null, 3, [zf, new U(null, 4, 5, V, [0, .5, .5, 1], null), Ff, new U(null, 4, 5, V, [nc, new U(null, 1, 5, V, [.5], null), new U(null, 2, 5, V, [0, .5], null), new U(null, 3, 5, V, [0, 0, 1], null)], null), Af, new U(null, 4, 5, V, [1 / 6, 1 / 3, 1 / 3, 1 / 6], null)], null);
-function Kf(a, b, c, d, e, f) {
+;if ("undefined" === typeof Kf) {
+  var Kf = function() {
+    var a = td ? td(oe) : sd.call(null, oe), b = td ? td(oe) : sd.call(null, oe), c = td ? td(oe) : sd.call(null, oe), d = td ? td(oe) : sd.call(null, oe), e = rc(oe, Df, gf());
+    return new rf(Sb("lander.input", "handle-input"), function() {
+      return function(a) {
+        return (M.b ? M.b(a) : M.call(null, a)).call(null, yf);
+      };
+    }(a, b, c, d, e), uf, e, a, b, c, d);
+  }()
+}
+sf(Kf, Ef, function(a) {
+  return yd.v(a, sc, yf, Cf);
+});
+sf(Kf, Cf, function(a, b) {
+  var c = b.keyCode;
+  if (Vb.a(37, c) || Vb.a(97, c)) {
+    return yd.v(a, Fd, xf, function() {
+      return function(a) {
+        return ((a + 10) % 360 + 360) % 360;
+      };
+    }(c));
+  }
+  if (Vb.a(39, c) || Vb.a(100, c)) {
+    return yd.v(a, Fd, xf, function() {
+      return function(a) {
+        return ((a - 10) % 360 + 360) % 360;
+      };
+    }(c));
+  }
+  if (Vb.a(32, c)) {
+    return yd.v(a, sc, Bf, 100);
+  }
+  if (Vb.a(tf, c)) {
+    return null;
+  }
+  throw Error([E("No matching clause: "), E(b.keyCode)].join(""));
+});
+var Jf = new pa(null, 3, [zf, new U(null, 4, 5, V, [0, .5, .5, 1], null), Ff, new U(null, 4, 5, V, [nc, new U(null, 1, 5, V, [.5], null), new U(null, 2, 5, V, [0, .5], null), new U(null, 3, 5, V, [0, 0, 1], null)], null), Af, new U(null, 4, 5, V, [1 / 6, 1 / 3, 1 / 3, 1 / 6], null)], null);
+function Lf(a) {
+  var b = a.getContext("2d");
+  b.fillStyle = "000000";
+  b.fillRect(0, 0, a.width, a.height);
+}
+function Mf(a) {
+  a.beginPath();
+  a.moveTo(-3, -5);
+  a.lineTo(0, 5);
+  a.lineTo(3, -5);
+  a.lineTo(-3, -5);
+  a.stroke();
+}
+function Nf() {
+  return new pa(null, 5, [yf, Ef, wf, new U(null, 5, 5, V, [0, 0, 190, 0, 0], null), vf, (new Date).getTime(), xf, 0, Bf, 0], null);
+}
+function Of(a) {
+  var b = M.b ? M.b(a) : M.call(null, a), c = Gc(b) ? md(ud, b) : b, d = qc(c, xf), e = qc(c, Bf), f = qc(c, vf), g = qc(c, wf), h = (new Date).getTime(), l = .001 * (h - f), m = function(a, b, c, d) {
+    return function() {
+      return Math.sin(c * Math.PI / -180) * d;
+    };
+  }(b, c, d, e, f, g, h, l), n = function(a, b, c, d) {
+    return function() {
+      return -9.81 + Math.cos(c * Math.PI / -180) * d;
+    };
+  }(b, c, d, e, f, g, h, l, m), b = If(new U(null, 4, 5, V, [function() {
+    return function(a) {
+      return a.b ? a.b(3) : a.call(null, 3);
+    };
+  }(b, c, d, e, f, g, h, l, m, n), function() {
+    return function(a) {
+      return a.b ? a.b(4) : a.call(null, 4);
+    };
+  }(b, c, d, e, f, g, h, l, m, n), m, n], null), g, l);
+  yd.h(a, Ed, new pa(null, 2, [wf, b, vf, h], null));
+}
+if ("undefined" === typeof Pf) {
+  var Pf = function() {
+    var a = td ? td(oe) : sd.call(null, oe), b = td ? td(oe) : sd.call(null, oe), c = td ? td(oe) : sd.call(null, oe), d = td ? td(oe) : sd.call(null, oe), e = rc(oe, Df, gf());
+    return new rf(Sb("lander.lunarlander", "check-game-cond"), function() {
+      return function(a) {
+        return (M.b ? M.b(a) : M.call(null, a)).call(null, yf);
+      };
+    }(a, b, c, d, e), uf, e, a, b, c, d);
+  }()
+}
+sf(Pf, Cf, function(a) {
+  var b = M.b ? M.b(a) : M.call(null, a), b = Gc(b) ? md(ud, b) : b, c = qc(b, wf);
+  S(c, 0);
+  b = S(c, 1);
+  c = S(c, 2);
+  if (-100 < b && 100 > b && 0 < c && 200 > c) {
+    return null;
+  }
+  b = Nf();
+  return wd.a ? wd.a(a, b) : wd.call(null, a, b);
+});
+sf(Pf, uf, function() {
+  return Ub;
+});
+if ("undefined" === typeof Qf) {
+  var Qf = function() {
+    var a = td ? td(oe) : sd.call(null, oe), b = td ? td(oe) : sd.call(null, oe), c = td ? td(oe) : sd.call(null, oe), d = td ? td(oe) : sd.call(null, oe), e = rc(oe, Df, gf());
+    return new rf(Sb("lander.lunarlander", "drawaction"), function() {
+      return function(a) {
+        return (M.b ? M.b(a) : M.call(null, a)).call(null, yf);
+      };
+    }(a, b, c, d, e), uf, e, a, b, c, d);
+  }()
+}
+sf(Qf, Ef, function(a, b) {
+  Lf(b);
+  var c = b.getContext("2d");
+  c.fillStyle = "00FF00";
+  c.strokeStyle = "FFFFFF";
+  c.fillText("Welcome to Lunar Lander!", 0, 40);
+  c.fillText("Press any key to play!", 0, 50);
+  c.fillText("Press left and right to rotate", 0, 60);
+  c.fillText("Press space to engage rocket", 0, 70);
+  c.fillText("Win by making a gentle landing", 0, 80);
+  c.fillText("Leaving the screen to the left, right, or top will cause you to lose.", 0, 90);
+  return c;
+});
+sf(Qf, Cf, function(a, b) {
+  var c = M.b ? M.b(a) : M.call(null, a), d = Gc(c) ? md(ud, c) : c, e = qc(d, wf), c = qc(d, xf), f = b.width, g = b.height;
+  Lf(b);
+  var h = b.getContext("2d");
+  h.fillStyle = "00FF00";
+  h.strokeStyle = "FFFFFF";
+  h.save();
+  h.translate(0, g);
+  h.scale(1, -1);
+  h.scale(f / 200, g / 200);
+  h.translate(100, -0);
+  h.translate(e.b ? e.b(1) : e.call(null, 1), e.b ? e.b(2) : e.call(null, 2));
+  d = Gc(d) ? md(ud, d) : d;
+  qc(d, wf);
+  e = qc(d, xf);
+  h.save();
+  h.rotate(e * Math.PI / 180);
+  h.strokeStyle = "FFFFFF";
+  Mf(h);
+  d = Gc(d) ? md(ud, d) : d;
+  qc(d, wf);
+  0 < qc(d, Bf) && (h.save(), h.translate(0, -5), h.strokeStyle = "FF0000", Mf(h), h.restore());
+  h.restore();
+  h.save();
+  h.scale(1, -1);
+  h.fillText("" + E(c), 0, 0);
+  h.restore();
+  h.restore();
+  return h;
+});
+ca("lander.lunarlander.init", function(a) {
+  return window.onload = function() {
+    var b = function() {
+      var a = Nf();
+      return td ? td(a) : sd.call(null, a);
+    }();
+    Qf.a ? Qf.a(b, a) : Qf.call(null, b, a);
+    setInterval(function(b) {
+      return function() {
+        Pf.b ? Pf.b(b) : Pf.call(null, b);
+        Vb.a(Cf, (M.b ? M.b(b) : M.call(null, b)).call(null, yf)) && Of(b);
+        return Qf.a ? Qf.a(b, a) : Qf.call(null, b, a);
+      };
+    }(b), 1);
+    document.onkeydown = function(a) {
+      return function(b) {
+        return Kf.a ? Kf.a(a, b) : Kf.call(null, a, b);
+      };
+    }(b);
+    return document.onkeyup = function(a) {
+      return function(b) {
+        var e = b.keyCode;
+        if (Vb.a(32, e)) {
+          return yd.v(a, sc, Bf, 0);
+        }
+        if (Vb.a(tf, e)) {
+          return null;
+        }
+        throw Error([E("No matching clause: "), E(b.keyCode)].join(""));
+      };
+    }(b);
+  }();
+});
+function Rf(a, b, c, d, e, f) {
   a = new U(null, 3, 5, V, [0, a, b], null);
   b = function() {
     return function(a) {
@@ -5750,7 +5933,7 @@ ca("numerics.canvasui.init", function(a) {
   }()) ? function() {
     for (var b = document.getElementById("prey-population-slider"), c = document.getElementById("predator-population-slider"), d = document.getElementById("reproduction-rate-slider"), e = document.getElementById("predation-rate-slider"), f = document.getElementById("growth-rate-slider"), g = document.getElementById("death-rate-slider"), h = function(b, c, d, e, f, g) {
       return function() {
-        var h = Kf(b.value / b.max * 3 + 1, c.value / c.max * 3 + 1, d.value / d.max * 3, e.value / e.max * 3, f.value / f.max * 3, g.value / g.max * 3), t = a.getContext("2d");
+        var h = Rf(b.value / b.max * 3 + 1, c.value / c.max * 3 + 1, d.value / d.max * 3, e.value / e.max * 3, f.value / f.max * 3, g.value / g.max * 3), t = a.getContext("2d");
         t.fillStyle = "#000000";
         t.fillRect(0, 0, a.width, a.height);
         t.strokeStyle = "#333333";
@@ -5805,189 +5988,6 @@ ca("numerics.canvasui.init", function(a) {
     }
     return h();
   }() : null;
-});
-if ("undefined" === typeof Lf) {
-  var Lf = function() {
-    var a = td ? td(oe) : sd.call(null, oe), b = td ? td(oe) : sd.call(null, oe), c = td ? td(oe) : sd.call(null, oe), d = td ? td(oe) : sd.call(null, oe), e = rc(oe, Df, gf());
-    return new rf(Sb("numerics.input", "handle-input"), function() {
-      return function(a) {
-        return (M.b ? M.b(a) : M.call(null, a)).call(null, yf);
-      };
-    }(a, b, c, d, e), uf, e, a, b, c, d);
-  }()
-}
-sf(Lf, Ef, function(a) {
-  return yd.v(a, sc, yf, Cf);
-});
-sf(Lf, Cf, function(a, b) {
-  var c = b.keyCode;
-  if (Vb.a(37, c) || Vb.a(97, c)) {
-    return yd.v(a, Fd, xf, function() {
-      return function(a) {
-        return ((a + 10) % 360 + 360) % 360;
-      };
-    }(c));
-  }
-  if (Vb.a(39, c) || Vb.a(100, c)) {
-    return yd.v(a, Fd, xf, function() {
-      return function(a) {
-        return ((a - 10) % 360 + 360) % 360;
-      };
-    }(c));
-  }
-  if (Vb.a(32, c)) {
-    return yd.v(a, sc, Bf, 100);
-  }
-  if (Vb.a(tf, c)) {
-    return null;
-  }
-  throw Error([E("No matching clause: "), E(b.keyCode)].join(""));
-});
-function Mf(a) {
-  var b = a.getContext("2d");
-  b.fillStyle = "000000";
-  b.fillRect(0, 0, a.width, a.height);
-}
-function Nf(a) {
-  a.beginPath();
-  a.moveTo(-3, -5);
-  a.lineTo(0, 5);
-  a.lineTo(3, -5);
-  a.lineTo(-3, -5);
-  a.stroke();
-}
-function Of() {
-  return new pa(null, 5, [yf, Ef, wf, new U(null, 5, 5, V, [0, 0, 190, 0, 0], null), vf, (new Date).getTime(), xf, 0, Bf, 0], null);
-}
-function Pf(a) {
-  var b = M.b ? M.b(a) : M.call(null, a), c = Gc(b) ? md(ud, b) : b, d = qc(c, xf), e = qc(c, Bf), f = qc(c, vf), g = qc(c, wf), h = (new Date).getTime(), l = .001 * (h - f), m = function(a, b, c, d) {
-    return function() {
-      return Math.sin(c * Math.PI / -180) * d;
-    };
-  }(b, c, d, e, f, g, h, l), n = function(a, b, c, d) {
-    return function() {
-      return -9.81 + Math.cos(c * Math.PI / -180) * d;
-    };
-  }(b, c, d, e, f, g, h, l, m), b = If(new U(null, 4, 5, V, [function() {
-    return function(a) {
-      return a.b ? a.b(3) : a.call(null, 3);
-    };
-  }(b, c, d, e, f, g, h, l, m, n), function() {
-    return function(a) {
-      return a.b ? a.b(4) : a.call(null, 4);
-    };
-  }(b, c, d, e, f, g, h, l, m, n), m, n], null), g, l);
-  yd.h(a, Ed, new pa(null, 2, [wf, b, vf, h], null));
-}
-if ("undefined" === typeof Qf) {
-  var Qf = function() {
-    var a = td ? td(oe) : sd.call(null, oe), b = td ? td(oe) : sd.call(null, oe), c = td ? td(oe) : sd.call(null, oe), d = td ? td(oe) : sd.call(null, oe), e = rc(oe, Df, gf());
-    return new rf(Sb("numerics.lunarlander", "check-game-cond"), function() {
-      return function(a) {
-        return (M.b ? M.b(a) : M.call(null, a)).call(null, yf);
-      };
-    }(a, b, c, d, e), uf, e, a, b, c, d);
-  }()
-}
-sf(Qf, Cf, function(a) {
-  var b = M.b ? M.b(a) : M.call(null, a), b = Gc(b) ? md(ud, b) : b, c = qc(b, wf);
-  S(c, 0);
-  b = S(c, 1);
-  c = S(c, 2);
-  if (-100 < b && 100 > b && 0 < c && 200 > c) {
-    return null;
-  }
-  b = Of();
-  return wd.a ? wd.a(a, b) : wd.call(null, a, b);
-});
-sf(Qf, uf, function() {
-  return Ub;
-});
-if ("undefined" === typeof Rf) {
-  var Rf = function() {
-    var a = td ? td(oe) : sd.call(null, oe), b = td ? td(oe) : sd.call(null, oe), c = td ? td(oe) : sd.call(null, oe), d = td ? td(oe) : sd.call(null, oe), e = rc(oe, Df, gf());
-    return new rf(Sb("numerics.lunarlander", "drawaction"), function() {
-      return function(a) {
-        return (M.b ? M.b(a) : M.call(null, a)).call(null, yf);
-      };
-    }(a, b, c, d, e), uf, e, a, b, c, d);
-  }()
-}
-sf(Rf, Ef, function(a, b) {
-  Mf(b);
-  var c = b.getContext("2d");
-  c.fillStyle = "00FF00";
-  c.strokeStyle = "FFFFFF";
-  c.fillText("Welcome to Lunar Lander!", 0, 40);
-  c.fillText("Press any key to play!", 0, 50);
-  c.fillText("Press left and right to rotate", 0, 60);
-  c.fillText("Press space to engage rocket", 0, 70);
-  c.fillText("Win by making a gentle landing", 0, 80);
-  c.fillText("Leaving the screen to the left, right, or top will cause you to lose.", 0, 90);
-  return c;
-});
-sf(Rf, Cf, function(a, b) {
-  var c = M.b ? M.b(a) : M.call(null, a), d = Gc(c) ? md(ud, c) : c, e = qc(d, wf), c = qc(d, xf), f = b.width, g = b.height;
-  Mf(b);
-  var h = b.getContext("2d");
-  h.fillStyle = "00FF00";
-  h.strokeStyle = "FFFFFF";
-  h.save();
-  h.translate(0, g);
-  h.scale(1, -1);
-  h.scale(f / 200, g / 200);
-  h.translate(100, -0);
-  h.translate(e.b ? e.b(1) : e.call(null, 1), e.b ? e.b(2) : e.call(null, 2));
-  d = Gc(d) ? md(ud, d) : d;
-  qc(d, wf);
-  e = qc(d, xf);
-  h.save();
-  h.rotate(e * Math.PI / 180);
-  h.strokeStyle = "FFFFFF";
-  Nf(h);
-  d = Gc(d) ? md(ud, d) : d;
-  qc(d, wf);
-  0 < qc(d, Bf) && (h.save(), h.translate(0, -5), h.strokeStyle = "FF0000", Nf(h), h.restore());
-  h.restore();
-  h.save();
-  h.scale(1, -1);
-  h.fillText("" + E(c), 0, 0);
-  h.restore();
-  h.restore();
-  return h;
-});
-ca("numerics.lunarlander.init", function(a) {
-  return window.onload = function() {
-    var b = function() {
-      var a = Of();
-      return td ? td(a) : sd.call(null, a);
-    }();
-    Rf.a ? Rf.a(b, a) : Rf.call(null, b, a);
-    setInterval(function(b) {
-      return function() {
-        Qf.b ? Qf.b(b) : Qf.call(null, b);
-        Vb.a(Cf, (M.b ? M.b(b) : M.call(null, b)).call(null, yf)) && Pf(b);
-        return Rf.a ? Rf.a(b, a) : Rf.call(null, b, a);
-      };
-    }(b), 1);
-    document.onkeydown = function(a) {
-      return function(b) {
-        return Lf.a ? Lf.a(a, b) : Lf.call(null, a, b);
-      };
-    }(b);
-    return document.onkeyup = function(a) {
-      return function(b) {
-        var e = b.keyCode;
-        if (Vb.a(32, e)) {
-          return yd.v(a, sc, Bf, 0);
-        }
-        if (Vb.a(tf, e)) {
-          return null;
-        }
-        throw Error([E("No matching clause: "), E(b.keyCode)].join(""));
-      };
-    }(b);
-  }();
 });
 
 })();
