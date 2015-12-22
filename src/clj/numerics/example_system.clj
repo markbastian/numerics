@@ -3,10 +3,13 @@
             [numerics.tableaus :as tableaus]
             [numerics.runge-kutta :as rk]))
 
+(set! *warn-on-reflection* true)
+(set! *unchecked-math* :warn-on-boxed)
+
 ;Example 25.10 of Chapra and Canale
 (def ic [0 4 6])
-(defn f [[_ y1 _]] (* -0.5 y1))
-(defn g [[_ y1 y2]] (- 4.0 (* 0.3 y2) (* 0.1 y1)))
+(defn f [[_ ^double y1 _]] (* -0.5 y1))
+(defn g [[_ ^double y1 ^double y2]] (- 4.0 (* 0.3 y2) (* 0.1 y1)))
 
 (prn (rk/ks [f g] ic 0.5 tableaus/classic-fourth-order))
 (prn (rk/rk-step [f g] ic 0.5 tableaus/classic-fourth-order))

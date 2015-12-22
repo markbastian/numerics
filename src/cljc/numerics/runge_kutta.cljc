@@ -1,5 +1,8 @@
 (ns numerics.runge-kutta)
 
+;(set! *warn-on-reflection* true)
+;(set! *unchecked-math* :warn-on-boxed)
+
 (defn ki "Compute a single k value for a system of difeqs."
   [f [tn & yn] dt a c k]
   (let [dy (map #(* dt (reduce + (map * a %))) k)]

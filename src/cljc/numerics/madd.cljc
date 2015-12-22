@@ -1,5 +1,5 @@
-(ns numerics.linalg
-  (:require [clojure.pprint :as pp]))
+(ns numerics.madd)
+
 
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* :warn-on-boxed)
@@ -8,15 +8,6 @@
         [0.5 1.2 5.4 0.3]
         [0.4 2 0.4 5.4]
         [0.4 3.2 1.2 5.6]])
-
-(def N [[1.1 2.1]
-        [9.4 4.3]
-        [1.2 5.6]
-        [6.4 1.4]])
-
-(defn mmul [A B] (vec (for [i (range (count A))]
-  (vec (for [j (range (count (B i)))]
-    (reduce + (map * (map #(% j) B) (A i))))))))
 
 (defn fast-dot [^doubles Ai ^doubles Bi]
   (loop [c (transient []) j 0]
@@ -37,7 +28,7 @@
          (vec (for [j (range (count Ai))]
                 (+ ^double (Ai j) ^double (Bi j)))))))
 
-(defn canonical-madd [A B] (mapv #(mapv + %1 %2) A B))
+(defn idiomatic-madd [A B] (mapv #(mapv + %1 %2) A B))
 
 (defn madd [A B]
   (vec (for [i (range (count A))]
@@ -45,13 +36,20 @@
                 (+ (or (get-in A [i j]) 0.0)
                    (or (get-in B [i j]) 0.0)))))))
 
-(def n 10000)
+(def n 1000000)
+(prn (str "super-fast-madd x " n))
 (time (dotimes [_ n] (super-fast-madd M M)))
+
+(prn (str "fast-madd x " n))
 (time (dotimes [_ n] (fast-madd M M)))
-(time (dotimes [_ n] (canonical-madd M M)))
+
+(prn (str "idiomatic-madd x " n))
+(time (dotimes [_ n] (idiomatic-madd M M)))
+
+(prn (str "madd x " n))
 (time (dotimes [_ n] (madd M M)))
 
-(time (super-fast-madd M M))
-(time (fast-madd M M))
-(time (canonical-madd M M))
-(time (madd M M))
+;(time (super-fast-madd M M))
+;(time (fast-madd M M))
+;(time (idiomatic-madd M M))
+;(time (madd M M))
