@@ -6,6 +6,11 @@ A Clojure numerical analysis library.
 
 Runge-Kutta Methods are concisely implemented.
 
+~~~~
+(defn horner
+  [t c] (reduce #(+ (* t %1) %2) (rseq c)))
+~~~~
+
 ## TODO
 
 Verify adaptive step control
