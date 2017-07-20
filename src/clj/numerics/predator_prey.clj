@@ -5,7 +5,7 @@
   (:import (org.jfree.chart ChartFactory ChartPanel JFreeChart)
            (org.jfree.chart.plot PlotOrientation XYPlot)
            (org.jfree.data.xy XYSeriesCollection XYSeries VectorSeries VectorSeriesCollection)
-           (javax.swing JFrame)
+           (javax.swing JFrame JTabbedPane)
            (java.awt BorderLayout)
            (org.jfree.chart.renderer.xy VectorRenderer)
            (org.jfree.chart.axis NumberAxis)))
@@ -26,46 +26,46 @@
   (.add rabbits-series (step 0) (step 1))
   (.add foxes-series (step 0) (step 2)))
 
-(def chart (ChartFactory/createXYLineChart 
-  "Predator-Prey Model" 
-  "Time"
-  "Population"
-  (doto (XYSeriesCollection.)
-    ;(.addSeries state-series)
-    (.addSeries rabbits-series)
-    (.addSeries foxes-series)
-    )
-  PlotOrientation/VERTICAL
-  true true true))
+(def chart
+  (ChartFactory/createXYLineChart
+    "Predator-Prey Model"
+    "Time"
+    "Population"
+    (doto (XYSeriesCollection.)
+      (.addSeries rabbits-series)
+      (.addSeries foxes-series))
+    PlotOrientation/VERTICAL
+    true true true))
 
-(def vs (VectorSeries. "Derivative"))
+(defn create-phase-plot [dr df]
+  (reduce
+    (fn [vs [r f x y]]
+      (doto vs (.add r f x y)))
+    (VectorSeries. "Derivative")
+    (let [scale 0.2]
+      (for [r (range 0 5 0.2) f (range 0 5 0.2)
+            :let
+            [a (dr ['_ r f])
+             b (df ['_ r f])
+             m (Math/sqrt (+ (* a a) (* b b)))
+             s (if (< m 1E-6) 1E6 m)
+             x (* scale (/ a s))
+             y (* scale (/ b s))]]
+        [r f x y]))))
 
-(def scale 0.2)
-
-(doseq [r (range 0 5 0.2)]
-  (doseq [f (range 0 5 0.2) :let 
-          [a (dr [0 r f]) 
-           b (df [0 r f])
-           m (Math/sqrt (+ (* a a) (* b b)))
-           s (if (< m 1E-6) 1E6 m)
-           x (* scale (/ a s))
-           y (* scale (/ b s))]]
-    ;(.add vs r f (doto (* scale a) prn) (* scale b))
-    (.add vs r f x y)))
-
-(def vsc (doto (VectorSeriesCollection.) (.addSeries vs)))
-
-(def x-axis (NumberAxis. "Rabbits"))
-(def y-axis (NumberAxis. "Foxes"))
-(def renderer (VectorRenderer.))
-(def plot (XYPlot. vsc x-axis y-axis renderer))
-(def c (JFreeChart. "Direction Field" plot))
-
-(def cp (ChartPanel. c))
+(def cp
+  (JFreeChart.
+    "Direction Field"
+    (XYPlot.
+      (doto (VectorSeriesCollection.) (.addSeries (create-phase-plot dr df)))
+      (NumberAxis. "Rabbits")
+      (NumberAxis. "Foxes")
+      (VectorRenderer.))))
 
 (doto (JFrame. "Predator Prey Example")
   (.setSize 800 600)
   (.setDefaultCloseOperation JFrame/DISPOSE_ON_CLOSE)
-  ;(.add cp BorderLayout/CENTER)
-  (.add (ChartPanel. chart) BorderLayout/CENTER)
+  (.add (doto (JTabbedPane.)
+          (.addTab "Phase Plot" (ChartPanel. cp))
+          (.addTab "Time Series Plot" (ChartPanel. chart))) BorderLayout/CENTER)
   (.setVisible true))

@@ -1,5 +1,4 @@
-(ns numerics.linalg
-  (:require [clojure.pprint :as pp]))
+(ns numerics.linalg)
 
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* :warn-on-boxed)
@@ -42,16 +41,17 @@
 (defn madd [A B]
   (vec (for [i (range (count A))]
          (vec (for [j (range (count (A i)))]
+                
                 (+ (or (get-in A [i j]) 0.0)
                    (or (get-in B [i j]) 0.0)))))))
 
-(def n 10000)
-(time (dotimes [_ n] (super-fast-madd M M)))
-(time (dotimes [_ n] (fast-madd M M)))
-(time (dotimes [_ n] (canonical-madd M M)))
-(time (dotimes [_ n] (madd M M)))
-
-(time (super-fast-madd M M))
-(time (fast-madd M M))
-(time (canonical-madd M M))
-(time (madd M M))
+;(def n 10000)
+;(time (dotimes [_ n] (super-fast-madd M M)))
+;(time (dotimes [_ n] (fast-madd M M)))
+;(time (dotimes [_ n] (canonical-madd M M)))
+;(time (dotimes [_ n] (madd M M)))
+;
+;(time (super-fast-madd M M))
+;(time (fast-madd M M))
+;(time (canonical-madd M M))
+;(time (madd M M))

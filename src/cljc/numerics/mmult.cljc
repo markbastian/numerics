@@ -34,8 +34,8 @@
          (vec (for [j (range (count (B i)))]
                 (reduce + (map * (map #(% j) B) (A i))))))))
 
-(prn (mmul M N))
-;(prn (fast-mmul M N))
-
-(def n 10000)
-(prn (time (dotimes [_ n] (mmul M M))))
+;(prn (mmul M N))
+;;(prn (fast-mmul M N))
+;
+;(def n 10000)
+;(prn (time (dotimes [_ n] (mmul M M))))

@@ -1,4 +1,44 @@
-(ns numerics.roots)
+(ns numerics.roots
+  #_(:require [clojure.pprint :refer [pprint]]))
+
+(defn abs-diff [a b] (Math/abs (- a b)))
+
+(defn pct-diff [a b]
+  (let [avg (* 0.5 (+ a b))]
+    (if (zero? avg)
+      (when (== a b 0.0) 0.0)
+      (Math/abs (/ (- a b) avg 0.01)))))
+
+(defn newton-step [f df x] (- x (/ (f x) (df x))))
+
+(defn newton-solver [f df x0]
+  (iterate (partial newton-step f df) x0))
+
+(defn bisect-step [f [xlo fxlo xhi fxhi]]
+  (let [xm (* 0.5 (+ xlo xhi)) fxm (f xm)]
+    (cond
+      (neg? (* fxlo fxm)) [xlo fxlo xm fxm]
+      (neg? (* fxhi fxm)) [xm fxm xhi fxhi]
+      :default [xm fxm xm fxm])))
+
+(defn bisector [f [lo hi]]
+  (iterate (partial f bisect-step) [lo (f lo) hi (f hi)]))
+
+(defn central-difference [f dx]
+  (fn [x] (/ (apply - (map #(f (+ % x)) ((juxt + -) dx))) 2.0 dx)))
+
+(defn secant-solver [fx dx x0]
+  (newton-solver fx (central-difference fx dx) x0))
+
+(defn converge-solve [iterator]
+  (->> iterator
+       (partition 2 1)
+       (some (fn [[o n]](when (< (pct-diff o n) 1E-6) n)))))
+
+(defn solve-secant [fx dx guess]
+  (->> guess
+       (secant-solver fx dx)
+       converge-solve))
 
 (defn early-exit [xfx] (when (== 0 (second xfx)) xfx))
 
