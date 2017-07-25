@@ -7,7 +7,8 @@
   :dependencies [[org.clojure/clojure "1.9.0-alpha16"]
                  [org.jfree/jfreechart "1.0.19"]
                  [org.clojure/clojurescript "1.9.671"]
-                 [net.mikera/core.matrix "0.60.3"]]
+                 [net.mikera/core.matrix "0.60.3"]
+                 [com.taoensso/tufte "1.1.1"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [org.clojure/clojurescript "1.9.671"]]
