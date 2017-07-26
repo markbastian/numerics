@@ -1,7 +1,8 @@
 (ns numerics.lorenz
   (:require [numerics.runge-kutta :as rk]
             [numerics.tableaus :as tableaus]
-            [clojure.pprint :as pprint]))
+            [clojure.pprint :as pprint]
+            [clojure.string :as cs]))
 
 (def sigma 10.0)
 (def beta (/ 8.0 3.0))
@@ -14,4 +15,4 @@
 
 (def steps (take 100 (iterate #(rk/rk-step [dx dy dz] % 0.1 tableaus/classic-fourth-order) ic)))
 
-(pprint/pprint steps)
+(spit "lorenz.csv" (cs/join "\n" (map (partial cs/join ",") steps)))

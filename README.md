@@ -2,15 +2,18 @@
 
 A Clojure numerical analysis library.
 
-## Usage
+## Features
 
-Runge-Kutta Methods are concisely implemented.
+* All generic functionality is .cljc.
+* Efficient polynomial evaluation using a really cool macro.
+* A variety of explicit Runge-Kutta methods for systems of equations.
+* Multiple integration techniques (Romberg, Trapezoid, Adaptive Simpson's).
+* Single-variable optimization using quadratic and golden search.
 
-## TODO
+## Examples
 
-Verify adaptive step control
-
-Create web demo
+* Predator-Prey model
+* Lorenz attractor
 
 ## License
 

@@ -10,13 +10,13 @@
 
 (defn ks "Compute all of the k values (derivatives) in the step."
   [f ic dt { :keys [a c] }]
-  (loop [ks (repeat (count f) []) ai a ci c]
-    (if-not (first ci)
+  (loop [ks (repeat (count f) []) [fai & rai] a [fci & rci] c]
+    (if-not fci
       ks
       (recur
-        (map conj ks (ki f ic dt (first ai) (first ci) ks))
-        (rest ai)
-        (rest ci)))))
+        (map conj ks (ki f ic dt fai fci ks))
+        rai
+        rci))))
 
 (defn integrate
   "Perform the numerical integration step by adding the
